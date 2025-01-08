@@ -12,7 +12,9 @@ namespace r6recoilv2
     /// </summary>
     public partial class SplashScreen : Window
     {
-        public static string R6RVersion = DateTime.Now.ToString("MM/dd/yyyy");
+        // public static string R6RVersion = DateTime.Now.ToString("MM/dd/yyyy");
+        public static string R6RVersion = "v1.6.25.rev1";
+
         public SplashScreen()
         {
             InitializeComponent();
@@ -42,8 +44,12 @@ namespace r6recoilv2
                 string Output = await VersionRequest.Content.ReadAsStringAsync();
                 Output = Regex.Replace(Output, @"\t|\n|\r", ""); // ooo im the http request ghost and i like to add random fucking \n lines
 
+                bool NotUpToDate = false;
+
                 if (R6RVersion != Output)
                 {
+                    NotUpToDate = true;
+
                     if (MessageBox.Show("A newer version of r6recoilv2 is available! Press 'Yes' to be taken to the GitHub page.", "r6recoilv2", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
                        Helper.OpenURL("https://github.com/coastss/r6recoilv2");
@@ -53,7 +59,16 @@ namespace r6recoilv2
                 // aww its over
 
                 SplashScreenProgressBar.Value = 100;
-                SplashScreenStatus.Content = ("Up to date! (" + R6RVersion + ")");
+
+                if (NotUpToDate)
+                {
+                    SplashScreenStatus.Content = ("New version avaliable! (" + Output + ")");
+                    await Task.Delay(2000);
+                } else
+                {
+                    SplashScreenStatus.Content = ("Up to date! (" + R6RVersion + ")");
+                }
+               
 
                 // Close SplashScreen
                 // Open MainWindow
