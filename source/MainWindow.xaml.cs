@@ -58,7 +58,7 @@ namespace r6recoilv2
             }*/
 
             //BottomStatusText.Content = String.Format(SplashScreen.R6RVersion + " | siege focus: {0} | recoil: {1}", WindowStatus, RecoilStatus);
-            BottomStatusText.Content = String.Format(SplashScreen.R6RVersion + " | recoil: {0}", RecoilStatus);
+            BottomStatusText.Content = String.Format("{0} | recoil control: {1}", SplashScreen.R6RVersion, RecoilStatus);
         }
 
         /////////////////////////////////
